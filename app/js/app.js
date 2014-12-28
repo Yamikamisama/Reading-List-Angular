@@ -20,7 +20,17 @@
 	.directive('bookCover', function(){
 		return {
 				restrict: 'E',
-				templateUrl: 'partials/book-cover.html'
+				templateUrl: 'partials/book-cover.html',
+				replace: true
+
+		}
+	})
+
+	.directive('reviewForm', function(){
+	return {
+			restrict: 'E',
+			templateUrl: 'partials/review-form.html',
+			replace: true
 
 		}
 	});
