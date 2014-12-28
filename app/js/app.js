@@ -1,39 +1,54 @@
 (function(){
-'use strict';
+  'use strict';
 
-// Declare app level module which depends on views, and components
-	angular.module('myApp', [])
+  angular.module('myApp', [])
 
-	.controller('ReadingListController', function(){
-		this.books = books;
-		this.genres = genres;
-	})
+  .controller('ReadingListController', function(){
+    this.books = books;
+    this.genres = genres;
+    this.showForm = false;
+  })
 
-	.directive('bookGenres', function(){
-		return {
-			restrict: 'E',
-			templateUrl: 'partials/book.genres.html'
+  .directive('bookGenres', function(){
+    return {
+      restrict: 'E',
+      templateUrl: 'partials/book-genres.html',
+      scope: {
+        genres: '='
+      }
+    }
+  })
 
-		}
-	})
+  .directive('bookCover', function(){
+    return {
+      restrict: 'E',
+      templateUrl: 'partials/book-cover.html',
+      replace: true
+    }
+  })
 
-	.directive('bookCover', function(){
-		return {
-				restrict: 'E',
-				templateUrl: 'partials/book-cover.html',
-				replace: true
+  .directive('reviewForm', function(){
+    return {
+      restrict: 'E',
+      templateUrl: 'partials/review-form.html',
+      replace: true,
+      controller: function(){
+        this.book = {genres:{}};
 
-		}
-	})
+        this.addReview = function(form){
+          books.push(this.book);
+          this.book = {genres:{}};
+          form.$setPristine();
+        }
+      },
+      controllerAs: 'reviewFormCtrl',
+      scope: {
+        books: '=',
+        genres: '='
+      }
+    }
+  });
 
-	.directive('reviewForm', function(){
-	return {
-			restrict: 'E',
-			templateUrl: 'partials/review-form.html',
-			replace: true
-
-		}
-	});
 
   var genres = [ 'fable', 'fantasy', 'fiction', 'folklore', 'horror', 'humor', 'legend', 'metafiction', 'mystery', 'mythology', 'non-fiction', 'poetry' ];
 
